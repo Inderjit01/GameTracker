@@ -1,0 +1,164 @@
+/* QWidget base font */
+QWidget, QMainWindow {
+	font-family: Arial;
+	font-size: 15px;
+	color: #e0e0e0; 				/* light grey */
+	background-color: #1e1e1e; 		/* dark grey */
+}
+
+
+/* sidebar */
+QListWidget {
+	background-color: #2a2a2a; 		/* black */
+	color: #e0e0e0;  				/* light grey */
+	border: 1px solid #444; 		/* dark grey */
+	border-radius: 10px;
+}
+QListWidget::item:hover {
+	background-color: #3a3a3a;
+	color: #ffffff;
+	border-radius: 7px;
+}
+QListWidget::item:selected {
+	background-color: #5555ff; 		/* bright blue */
+	color: #ffffff;
+	border-radius: 7px;
+}
+QListWidget::item:selected:hover{
+	background-color: #5555ff; 		/* bright blue */
+	color: #ffffff;
+	border-radius: 7px;
+}
+
+
+/* Search bar */
+QLineEdit {
+	background-color: #2a2a2a;
+	color: #e0e0e0;
+	padding: 4px;
+	border: 1px solid #444;
+	border-radius: 4px;
+}
+
+/* buttons */
+QPushButton {
+	background-color: #3a3a3a; 		/* light grey */
+	color: #e0e0e0; 				/* light grey */
+	padding: 6px 10px;
+	border-radius: 6px;
+	border: 1px solid #555;
+}
+QPushButton:hover {
+	background-color: #4a4a4a;
+}
+QPushButton:pressed {
+	background-color: #5a5a5a;
+}
+	
+/* Specific widgets */
+
+/* Title of the sidebar */
+#NavTitle {
+	font-weight: bold;
+	font-size: 14px;
+	color: #e0e0e0;
+}
+
+/* For Triggers */
+#Trigger {
+	border: none;
+	background: transparent;
+}
+
+/* Game Card */
+#GameCard {
+	background-color: #1f1f1f;
+	border-radius: 16px;
+	border: 2px solid #444;
+}
+#GameTitle {
+	background-color: #1f1f1f;
+	font-size: 18px;
+	font-weight: bold;
+	color: #ffffff;
+	padding: 0px 3px;
+}
+#GamePlatform {
+    background-color: #2a2a2a;
+    font-size: 12px;
+    color: #bbbbbb;
+    padding: 2px 7px;
+	font-style: italic;
+}
+#GameReview {
+    background-color: #1f1f1f;
+    font-size: 13px;
+    font-weight: bold;
+    color: #4CAF50;
+    padding: 2x 3px;
+}
+#GameReview[scoreTier="unreleased"]{
+	color: #888888;
+}
+#GameReview[scoreTier="high"] {
+	color: #4CAF50;
+}
+#GameReview[scoreTier="mid"] {
+	color: #FFC107;
+}
+#GameReview[scoreTier="low"] {
+	color: #F44336;
+}
+#GameHours{
+	background-color: #1f1f1f;
+    font-size: 13px;
+    color: #cccccc;
+}
+#GameArt {
+	background-color: #1f1f1f;
+}
+#GameDate {
+	font-size: 11px;
+	background-color: #1f1f1f;
+}
+#GameStore {
+	background-color: #1f1f1f;
+	font-weight: bold;
+	color: #ffffff;
+	font-size: 18px;
+}
+#GamePrice {
+	background-color: #1f1f1f;
+	font-weight: bold;
+}
+#GamePrice[priceStatus=Free]{
+	color: #4CAF50;
+}
+#GameSalePrice {
+	background-color: #1f1f1f;
+	color: #4CAF50;
+	font-weight: bold;
+}
+#GameSubscriptionService {
+	background-color: #1f1f1f;
+	font-weight: bold;
+}
+#PriceSeparator {
+	background-color: #444;
+}
+
+/* When a game is clicked change background to blue */
+#GameCard[selected="true"] { 
+	background-color: #5555ff; 
+} 
+#GameCard[selected="true"] #GameArt,
+#GameCard[selected="true"] #GameTitle,
+#GameCard[selected="true"] #GamePlatform,
+#GameCard[selected="true"] #GameHours,
+#GameCard[selected="true"] #GameReview,
+#GameCard[selected="true"] #GamePrice,
+#GameCard[selected="true"] #GamePriceSale {
+    background-color: transparent;   
+    color: #ffffff;                  
+}
+
