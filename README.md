@@ -1,6 +1,11 @@
 # GameTracker
 
-![image_placeholder](image_placeholder)
+## Screenshots
+
+<img width="450" height="338" alt="image" src="https://github.com/user-attachments/assets/e4b44f5f-760d-4b7b-9860-6a367c106ae5" />
+<img width="450" height="338" alt="image" src="https://github.com/user-attachments/assets/c4b80477-19d0-4683-bd06-dff82b203e34" />
+<img width="450" height="338" alt="image" src="https://github.com/user-attachments/assets/773759c5-562c-42f1-8ff4-5f5fa9d05916" />
+<img width="450" height="338" alt="image" src="https://github.com/user-attachments/assets/0c4420f9-b51b-47bb-b4a6-00ebb921cbd2" />
 
 **GameTracker** is a desktop application for tracking your video game library, backlog, and wishlist. It fetches **game info, completion times, and prices** from multiple platforms, including Steam, Epic Games, Xbox, PlayStation, and Nintendo. Built with **Python and PyQt5**, it features a modern dark-themed interface and an **auto-update mechanism**.
 
@@ -35,16 +40,6 @@
 
 - **Dark Theme**
   - Clean, modern interface using `styles.qss`.
-
----
-
-## Screenshots
-
-![image_placeholder](image_placeholder)  
-*Game library view.*
-
-![image_placeholder](image_placeholder)  
-*Add game dialog with search suggestions.*
 
 ---
 
