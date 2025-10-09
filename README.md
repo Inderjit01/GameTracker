@@ -47,16 +47,18 @@
 
 ### From Installer (Windows)
 
-1. Download the latest [GameTrackerInstaller.exe](image_placeholder).  
+1. Download the latest [GameTrackerInstaller.exe](https://github.com/Inderjit01/GameTracker/releases).  
 2. Run the installer and follow the prompts.  
 3. The application will be installed to your selected folder.  
 
 ### From Source
 
 > **Note:** The `api.py` file does **not include API keys**. If you want to use the source code, you must add your own keys for RAWG, IsThereAnyDeal, and PlatPrices.
+> **Note:** Only need `src\GameTracker` if you don't want updates through Git.
 
-1. Clone the repository:
-
-```bash
-git clone https://github.com/YourUsername/GameTracker.git
-cd GameTracker
+1. Download /src/GameTracker.
+2. pip install -r requirements.txt
+3. Edit /controllers/api.py with your api keys.
+4. Edit version.py with your own version number.
+5. If you want remote updates through git edit /controllers/update_checker.py with the url to your git, otherwise you can remove the call to update_checker in app.py.
+6. Run app.py.
