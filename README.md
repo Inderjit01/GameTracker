@@ -29,7 +29,7 @@
 
 - **Custom Game Cards**
   - Cover art, platforms, review score, hours, dates, and price info.
-  - Interactive buttons for favorite, owned, completed status.
+  - Interactive buttons for favorite, owned, and completed status.
 
 - **Filtering & Sorting**
   - Filter by backlog, wishlist, favorites, completed, score, or completion hours.
@@ -111,6 +111,13 @@
 user/AppData/Roaming/GameTracker/
     └── games.db
 ```
+
+### References
+1. [RAWG](https://rawg.io/apidocs)
+2. [HowLongToBeat](https://howlongtobeat.com/)
+3. [PlatPrices](https://platprices.com/)
+4. [IsThereAnyDeals](https://isthereanydeal.com/)
+5. [nintendeals](https://pypi.org/project/nintendeals/)
 
 
 
