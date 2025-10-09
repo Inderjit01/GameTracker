@@ -62,3 +62,56 @@
 4. Edit version.py with your own version number.
 5. If you want remote updates through git edit /controllers/update_checker.py with the url to your git, otherwise you can remove the call to update_checker in app.py.
 6. Run app.py.
+
+---
+
+## Project Structure
+
+### App Side
+```
+/GameTracker/src/GameTracker │
+    app.py │
+    main_window.py │
+    version.py │
+    ├── controllers │
+        ├── api.py │
+        ├── game_controller.py │
+        └── update_checker.py │
+    ├── dialogs │
+        └── add_game.py │
+    ├── images │
+        ├── game_tracker_logo.png │
+        └── game_tracker_logo.ico │
+    ├── models │
+        └── db.py │
+    ├── styles │
+        └── styles.qss │
+    └── widgets
+        ├── game_card.py
+        ├── prices.py
+        └── strike_label.py
+```
+### Update Side
+
+```
+/GameTracker/src/Updater
+    └── updater.py
+```
+### Database
+
+1. Development Environment:
+```
+/GameTracker/src/GameTracker 
+    └──games.db
+```
+2. Executable Environment:
+```
+user/AppData/Roaming/GameTracker/
+    └── games.db
+```
+
+
+
+
+
+	
