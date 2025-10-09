@@ -77,6 +77,8 @@
         ├── api.py │
         ├── game_controller.py │
         └── update_checker.py │
+				├── https://raw.githubusercontent.com/Inderjit01/GameTracker/refs/heads/main/version.txt
+				└──	https://github.com/Inderjit01/GameTracker/releases/latest/download/GameTrackerInstaller.exe
     ├── dialogs │
         └── add_game.py │
     ├── images │
