@@ -12,7 +12,7 @@ from dialogs.add_game import AddGameDialog
 from controllers.game_controller import GameController
 from widgets.prices import WishlistPriceRunnable
 # 
-from controllers.api import search_games, fetch_hltb_data
+from controllers.api import search_games, fetch_hltb_data, fetch_steam_review_score
 from models.db import resource_path
 # Variables
 from version import __version__
@@ -179,7 +179,11 @@ class MainWindow(QMainWindow):
             # Grab HowLongToBeatData Based on user's selected game
             hltb_data = fetch_hltb_data(search_text)
             if hltb_data is None:
-                hltb_data = {}            
+                hltb_data = {}    
+                
+            # See if the game has a steam score else use rawg score when adding
+            steam_score = fetch_steam_review_score(data['name'], 'US')
+            print('steam score', steam_score)
             
             # add this game to the wishlist category of the database
             if data['action'] == 'wishlist':
@@ -190,7 +194,7 @@ class MainWindow(QMainWindow):
                     main_extras_hours=hltb_data.get('main_extras_hours', None),
                     completionist_hours=hltb_data.get('completionist_hours', None),
                     all_styles_hours=hltb_data.get('all_styles_hours', None),
-                    review_score=data.get('rating', None),
+                    review_score=steam_score if steam_score else data.get('rating', None),
                     owned=0,
                     image_url=data.get('background_image', None)
                 )
@@ -207,7 +211,7 @@ class MainWindow(QMainWindow):
                     main_extras_hours=hltb_data.get('main_extras_hours', None),
                     completionist_hours=hltb_data.get('completionist_hours', None),
                     all_styles_hours=hltb_data.get('all_styles_hours', None),
-                    review_score=data.get('rating', None),
+                    review_score=steam_score if steam_score else data.get('rating', None),
                     owned=1,
                     image_url=data.get('background_image', None)
                 )
