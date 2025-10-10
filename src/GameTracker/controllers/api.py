@@ -12,7 +12,7 @@ ISTHEREANYDEAL_API_KEY = ''
 PLAT_PRICES_API_KEY = ''
 # Dont need steam key yet
 # Steam api Key: ''
-# Domain Name: localhost
+#Domain Name: localhost
 
 '''Some titles have been remastered and they include the year in the title 
    but some api dont like the year in the title so I also try removing the year if it fails.
@@ -30,6 +30,23 @@ def _clean_title(title):
 '''
 def _similarity(a, b):
     return SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
+# Finds the steam id so I can search for the price
+def _get_steam_id(game_name, country='US'):
+    ID_URL = 'https://store.steampowered.com/api/storesearch/'
+    params = {'term': game_name, 'cc': country}
+    try:
+        request_data = requests.get(ID_URL, params=params, timeout=10)
+        request_data.raise_for_status()
+    except requests.RequestException:
+        return None
+    
+    id_data = request_data.json().get('items', [])
+    if not id_data:
+        return None
+            
+    best_item = max(id_data, key=lambda x: _similarity(game_name, x['name']))
+    return best_item['id']
 
 # Uses RAWG API to get list of games closest to user search input when adding games. Info: game title, platforms, rating, and release date
 def search_games(query, max_results=10):
@@ -80,29 +97,51 @@ def fetch_hltb_data(game_name):
             return data
     return None
 
-# Return the current steam price of game if it exists
-def steam_prices(game_name, country='US'):
-    # Finds the steam id so I can search for the price
-    def get_steam_id(game_name, country='US'):
-        ID_URL = 'https://store.steampowered.com/api/storesearch/'
-        params = {'term': game_name, 'cc': country}
-        try:
-            request_data = requests.get(ID_URL, params=params, timeout=10)
-            request_data.raise_for_status()
-        except requests.RequestException:
-            return None
-        
-        id_data = request_data.json().get('items', [])
-        if not id_data:
-            return None
-                
-        best_item = max(id_data, key=lambda x: _similarity(game_name, x['name']))
-        return best_item['id']
-    
+# Returns the steam score of the game if it exists
+def fetch_steam_review_score(game_name, country='US'):
     search_titles = _clean_title(game_name)
     
     for game_title in search_titles:
-        game_id = get_steam_id(game_title, country)
+        game_id = _get_steam_id(game_title, country)
+        if not game_id:
+            continue
+        
+        review_url = f'https://store.steampowered.com/appreviews/{game_id}' 
+        params = {
+            'json': 1,
+            'language': 'all',
+            'purchase_type': 'all'
+        }
+        
+        try:
+            request_data = requests.get(review_url, params, timeout=10)
+            request_data.raise_for_status()
+        except:
+            continue
+        
+        data = request_data.json()
+        if not data:
+            continue
+        
+        summary = data.get('query_summary', None)
+        if not summary:
+            continue
+        
+        positive_votes = summary.get('total_positive', 0)
+        total_votes = summary.get('total_reviews', 0)
+        
+        if total_votes > 0:
+            score = round((positive_votes / total_votes) * 5, 2)
+            return score
+        
+    return None
+
+# Return the current steam price of game if it exists
+def steam_prices(game_name, country='US'):
+    search_titles = _clean_title(game_name)
+    
+    for game_title in search_titles:
+        game_id = _get_steam_id(game_title, country)
         if not game_id:
             continue
         
