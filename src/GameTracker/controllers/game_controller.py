@@ -56,7 +56,7 @@ class GameController:
             else:
                 cursor.execute("""UPDATE games SET completed = ?, completed_date = ? WHERE id = ?""", (0, None, game_id))
         else:
-            cursor.execute(f""""UPDATE games SET {field} = ? WHERE id = ?""", (value, game_id))
+            cursor.execute(f"""UPDATE games SET {field} = ? WHERE id = ?""", (value, game_id))
         conn.commit()
         conn.close()
         

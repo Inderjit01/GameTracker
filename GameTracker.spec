@@ -28,7 +28,8 @@ a = Analysis(
         'models.db',
         'widgets.game_card',
         'widgets.prices',
-        'widgets.strike_label'
+        'widgets.strike_label',
+		'widgets.profile_menu'
     ],
     hookspath=[],
     hooksconfig={},

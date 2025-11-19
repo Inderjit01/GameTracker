@@ -5,12 +5,14 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QFile, QTextStream, Qt, QThreadPool
+from winotify import Notification, audio
 
 # Classes
 from widgets.game_card import GameCard
 from dialogs.add_game import AddGameDialog
 from controllers.game_controller import GameController
 from widgets.prices import WishlistPriceRunnable
+from widgets.profile_menu import ProfileMenu
 # 
 from controllers.api import search_games, fetch_hltb_data, fetch_steam_review_score
 from models.db import resource_path
@@ -106,6 +108,19 @@ class MainWindow(QMainWindow):
         self.delete_btn.clicked.connect(self.on_delete_game)
         top_bar.addWidget(self.delete_btn)
         
+        # User settings button. EX. run as service or store preferences
+        username = os.getlogin()
+        if username:
+            username = username.upper()[0]
+        else:
+            username = 'N/A'
+        self.profile_btn = QPushButton(username)
+        self.profile_btn.setObjectName('Profile')
+        self.profile_btn.setFixedSize(36, 36)
+        self.profile_btn.clicked.connect(self.open_profile_menu)
+        top_bar.addWidget(self.profile_btn)
+        
+        
         # Add everything to the right side of the page
         right_area.addLayout(top_bar)
         
@@ -137,6 +152,17 @@ class MainWindow(QMainWindow):
         
     
     # -----Event Handlers-----
+    
+    # Creates a menu for settings
+    def open_profile_menu(self):
+        # If the profile settings is open close it
+        if hasattr(self, 'profile_menu') and self.profile_menu.isVisible():
+            self.profile_menu.close()
+            return
+        
+        # Show the settings widget
+        self.profile_menu = ProfileMenu(self)
+        self.profile_menu.show_near(self.profile_btn)
     
     # Loads the list of games when a new filter is selected from sidebar
     # If Completed is selected it will deselect all other filters
@@ -183,7 +209,6 @@ class MainWindow(QMainWindow):
                 
             # See if the game has a steam score else use rawg score when adding
             steam_score = fetch_steam_review_score(data['name'], 'US')
-            print('steam score', steam_score)
             
             # add this game to the wishlist category of the database
             if data['action'] == 'wishlist':
