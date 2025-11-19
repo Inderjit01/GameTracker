@@ -1,0 +1,59 @@
+# -----------------------------
+# Build & distribution folders
+# -----------------------------
+build/
+dist/
+
+# -----------------------------
+# Installers / executables
+# -----------------------------
+GameTrackerInstaller.exe
+
+# -----------------------------
+# Test / temporary files
+# -----------------------------
+test_version_for_updates/
+heirarchy.txt
+src/GameTracker/games.db
+
+# -----------------------------
+# Sensitive API / config files
+# -----------------------------
+src/GameTracker/controllers/api.py
+*.env
+config.json
+secrets.json
+
+# -----------------------------
+# Python cache / bytecode
+# -----------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# -----------------------------
+# Virtual environments
+# -----------------------------
+env/
+venv/
+
+# -----------------------------
+# Logs
+# -----------------------------
+*.log
+
+# -----------------------------
+# OS / Editor files
+# -----------------------------
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+*.tmp
+
+# -----------------------------
+# Optional: GitHub specific
+# -----------------------------
+*.bak
+*.old
