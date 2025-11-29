@@ -12,13 +12,9 @@ a = Analysis(
     pathex=[r"C:\Users\inder\OneDrive\Documents\Python Projects\Game_Tracker\src\GameTracker"],
     binaries=[],
     datas=[
-        ('src/GameTracker/games.db', '.'),
+		('src/GameTracker/api.env', '.'),
         ('src/GameTracker/images', 'images'),
-        ('src/GameTracker/styles', 'styles'),
-        ('src/GameTracker/dialogs', 'dialogs'),
-        ('src/GameTracker/controllers', 'controllers'),
-        ('src/GameTracker/models', 'models'),
-        ('src/GameTracker/widgets', 'widgets'),
+        ('src/GameTracker/styles', 'styles')
     ] + fake_useragent_datas,
     hiddenimports=[
         'controllers.api',

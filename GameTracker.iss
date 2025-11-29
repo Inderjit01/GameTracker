@@ -2,7 +2,7 @@
 
 [Setup]
 AppName=GameTracker
-AppVersion=1.0
+AppVersion=2.0
 DefaultDirName={pf}\GameTracker
 DefaultGroupName=GameTracker
 UninstallDisplayIcon={app}\GameTracker.exe
