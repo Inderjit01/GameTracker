@@ -1,9 +1,14 @@
 from PyQt5.QtCore import QRunnable, pyqtSignal, QObject
 from threading import Thread
+import configparser
 
 # Methods
 from controllers.api import steam_prices, epic_prices, xbox_prices, nintendo_prices, playstation_prices
+from widgets.profile_menu import load_settings
 
+# Grabs the users perfered stores from the ini file
+store_preferences = load_settings()
+        
 class WorkerSignals(QObject):
     finished = pyqtSignal(dict)  # emits the result
 
@@ -35,8 +40,12 @@ class WishlistPriceRunnable(QRunnable):
                         price_info['full_price'] = 'Free'
                         best_price = 0
                 elif platform_price_info:
-                    full_price = platform_price_info['initial']
-                    sale_price = platform_price_info['final']
+                    full_price = platform_price_info.get('initial')
+                    sale_price = platform_price_info.get('final')
+                    # Exit if either is missing
+                    if full_price is None or sale_price is None:
+                        return
+                    
                     if sale_price and sale_price < best_price:
                         price_info['store'] = store
                         price_info['full_price'] = full_price
@@ -54,19 +63,21 @@ class WishlistPriceRunnable(QRunnable):
             api_calls = []
             # Checks steam and epic store 
             if 'pc' in platform:
-                api_calls.append(('Steam', lambda: steam_prices(g[1], 'US')))
-                api_calls.append(('Epic Games', lambda: epic_prices(g[1], 'US')))
+                if store_preferences.get("steam", True):
+                    api_calls.append(('Steam', lambda: steam_prices(g[1], 'US')))
+                if store_preferences.get("epic", True):
+                    api_calls.append(('Epic Games', lambda: epic_prices(g[1], 'US')))
            
             # Checks microsoft store    
-            if 'pc' in platform or 'xbox' in platform:
+            if ('pc' in platform or 'xbox' in platform) and store_preferences.get("xbox", True):
                 api_calls.append(('Xbox', lambda: xbox_prices(g[1], 'US')))
             
             # Checks playstation store
-            if 'playstation' in platform:
+            if 'playstation' in platform and store_preferences.get('playstation', True):
                 api_calls.append(('Playstation', lambda: playstation_prices(g[1], 'US')))
             
             # Checks nintendo store
-            if 'nintendo' in platform:
+            if 'nintendo' in platform and store_preferences.get('nintendo', True):
                 api_calls.append(('Nintendo', lambda: nintendo_prices(g[1], 'US')))
                 
             # Save all the thread objects to make sure they all finish

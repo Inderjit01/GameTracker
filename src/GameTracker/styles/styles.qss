@@ -200,4 +200,7 @@ QPushButton:pressed {
 	font-weight: bold;
 	font-size: 18px;
 }
-
+#ProfileStoreTitle {
+	font-weight: bold;
+	font_size: 14px;
+}
