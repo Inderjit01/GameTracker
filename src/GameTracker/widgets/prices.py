@@ -1,6 +1,6 @@
 from PyQt5.QtCore import QRunnable, pyqtSignal, QObject
-from threading import Thread
-import configparser
+from threading import Thread, Lock
+import time
 
 # Methods
 from controllers.api import steam_prices, epic_prices, xbox_prices, nintendo_prices, playstation_prices
@@ -21,10 +21,12 @@ class WishlistPriceRunnable(QRunnable):
     # Only runs when called with thread.start from main_window
     def run(self):
         wishlist_prices = {}
+        wishlist_lock = Lock()
         # grabs all the games in the wishlist category
         wishlist_games = self.controller.list_games(views=[4])
+        games_thread = []
         
-        for g in wishlist_games:
+        def start_wishlist_prices_thread(g):
             game_id = g[0]
             platform = (g[2] or "").lower()
             # To only grab the store with the lowest price
@@ -107,7 +109,20 @@ class WishlistPriceRunnable(QRunnable):
                 edit_price_info(result, store)
                                 
             # Stores each games best prices and store
-            wishlist_prices[game_id] = price_info
+            with wishlist_lock:
+                wishlist_prices[game_id] = price_info
+        
+        for g in wishlist_games:          
+            t = Thread(target=start_wishlist_prices_thread, args=(g, ))
+            t.start()
+            games_thread.append(t)
+        
+        # wait for all threads to be finished
+        for t in games_thread:
+            t.join()
+        
+        print(wishlist_prices)
+
         
         # Sends finsihed thread signal and returns the wishlist_prices
         self.signals.finished.emit(wishlist_prices)
